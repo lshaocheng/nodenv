@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  ubuntu-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+    container_name: node-dev
+    ports:
+      - "${HOST_PORT}:${CONTAINER_PORT}"
+    volumes:
+      - "${HOST_CODE_PATH}:${CONTAINER_CODE_PATH}"
+    tty: true
+    environment:
+      - NVM_DIR=/usr/local/nvm
