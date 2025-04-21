@@ -3,7 +3,6 @@ services:
   node-dev:
     build:
       context: .
-      dockerfile: Dockerfile
       args:
         NODE_VERSION: ${NODE_VERSION}
     container_name: node-dev
@@ -14,25 +13,6 @@ services:
     tty: true
     environment:
       - NVM_DIR=/usr/local/nvm
-    networks:
-      - app-network
-
-  nginx-proxy:
-    image: nginx:1.25-alpine
-    build:
-      context: ./services/nginx
-    container_name: nginx-proxy
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ${HOST_CODE_PATH}:/www/:rw
-      - ${NGINX_SSL_CERTIFICATE_DIR}:/ssl
-      - ${NGINX_CONFD_DIR}:/etc/nginx/conf.d
-      - ${NGINX_CONF_FILE}:/etc/nginx/nginx.conf
-      - ${NGINX_LOG_DIR}:/var/log/nginx
-    restart: always
-    tty: true
     networks:
       - app-network
 
